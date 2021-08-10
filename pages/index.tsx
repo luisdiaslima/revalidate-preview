@@ -1,8 +1,23 @@
+import { GetStaticProps } from 'next';
 import Head from 'next/head'
+import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import api from './api';
 
-export default function Home() {
+
+interface ProductData {
+  id: string;
+  title: string;
+  available_ecommerce: boolean;
+  summary?: string;
+  image: {
+    thumbnail: string;
+  }
+  discount_price: string;
+}
+
+export default function Home({ products }: { products: ProductData[] }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -13,42 +28,23 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          E-commerce <Link href="/">Pedido Pago</Link>
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          Listagem de produtos
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {products.map((product) => (
+            <Link href={`/produto/${product.id}`} >
+              <div className={styles.card}>
+                <h2>{product.title} &rarr;</h2>
+                <img src={product.image.thumbnail} width={100} height={100} placeholder="blur" />
+                <p> {product?.discount_price} </p>
+              </div>
+            </Link>
+          ))}
         </div>
       </main>
 
@@ -66,4 +62,35 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+interface Page {
+  items: Array<{ name: string, products: Array<any> }>;
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { REACT_APP_DOMAIN, X_SERVERLESS_TOKEN } = process.env;
+
+  const serverlessToken = X_SERVERLESS_TOKEN || '';
+
+  const configStore = serverlessToken ? {
+    headers: {
+      'X-Serverless-Token': serverlessToken,
+    },
+  } : {};
+
+  const response = await api.get(`/v2/store/info?domain=${REACT_APP_DOMAIN}`, configStore);
+
+  const config = {
+    headers: { Authorization: `Bearer ${response?.data?.session_jwt}`, 'X-Serverless-Token': X_SERVERLESS_TOKEN || '' },
+  };
+
+  const { data } = await api.get<Page>('/v2/page/home', config);
+
+  return {
+    props: {
+      products: data.items[0].products,
+    },
+    revalidate: 60,
+  };
 }
