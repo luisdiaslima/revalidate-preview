@@ -1,7 +1,7 @@
 reactloadingskeletonNextApp:
   component: "@sls-next/serverless-component@v3.2.1-alpha.0" # it is recommended you pin the latest stable version of serverless-next.js
   inputs:
-    domain: ["react-loading-skeleton", "teste.pedidopago.com.br"] # [ sub-domain, domain ]
+    domain: ["react-loading-skeleton.teste", "pedidopago.com.br"] # [ sub-domain, domain ]
     bucketRegion: us-east-1
     memory:
       defaultLambda: 1024
