@@ -1,6 +1,6 @@
 {
   "name": "65ae9vd-ynfpwp",
-  "hash": "KB/vZLo5scbER/e7vLtJS/zHyht5/7Ozp73H55WqW2g=",
+  "hash": "HZ1+D/adSPgUrxbjvXvsP9GZNCjNZhKKUYDXHYpxZag=",
   "description": "Default Lambda@Edge for Next CloudFront distribution",
   "memory": 1024,
   "timeout": 20,
