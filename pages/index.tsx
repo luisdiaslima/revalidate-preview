@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import api from './api';
+import { useWishList } from '../hooks/wishList';
 
 
 interface ProductData {
@@ -18,6 +19,7 @@ interface ProductData {
 }
 
 export default function Home({ products }: { products: ProductData[] }) {
+  const { addToWishList } = useWishList()
   return (
     <div className={styles.container}>
       <Head>
@@ -37,13 +39,15 @@ export default function Home({ products }: { products: ProductData[] }) {
 
         <div className={styles.grid}>
           {products.map((product) => (
-            <Link href={`/produto/${product.id}`} >
-              <div className={styles.card}>
-                <h2>{product.title} &rarr;</h2>
+            <div key={product.id} className={styles.card}>
+              <h2>{product.title} &rarr;</h2>
+              <Link href={`/produto/${product.id}`} >
                 <img src={product.image.thumbnail} width={100} height={100} placeholder="blur" />
-                <p> {product?.discount_price} </p>
-              </div>
-            </Link>
+              </Link>
+              <p> {product?.discount_price}
+                <button onClick={() => addToWishList(product)} >Adicionar a lista de desejos</button>
+              </p>
+            </div>
           ))}
         </div>
       </main>

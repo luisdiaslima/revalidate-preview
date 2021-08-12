@@ -43,7 +43,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = available_products.map((product) => ({
     params: {
-      id: product.id
+      id: product.id,
     },
   }));
 
@@ -75,7 +75,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       product: product.data,
     },
-    revalidate: 10
+    revalidate: 1000
   }
 };
 
