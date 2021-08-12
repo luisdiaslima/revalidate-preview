@@ -1,0 +1,22 @@
+reactloadingskeletonNextApp:
+  component: "@sls-next/serverless-component@v3.2.1-alpha.0" # it is recommended you pin the latest stable version of serverless-next.js
+  inputs:
+    domain: ["react-loading-skeleton", "teste.pedidopago.com.br"] # [ sub-domain, domain ]
+    bucketRegion: us-east-1
+    memory:
+      defaultLambda: 1024
+      apiLambda: 1024
+      imageLambda: 1024
+    build.args: ["build", "--max-old-space-size=8196"]
+    useServerlessTraceTarget: true
+    cloudfront:
+      #aliases
+      certificate:
+        cloudFrontDefaultCertificate: false # specify false and one of IAM/ACM certificates, or specify true and omit IAM/ACM inputs for default certificate
+        acmCertificateArn: "arn:aws:acm:us-east-1:653347587803:certificate/7e0f3e82-7083-40ed-9755-3473d9160a80"
+    domainType: apex
+    certificateArn: "arn:aws:acm:us-east-1:653347587803:certificate/7e0f3e82-7083-40ed-9755-3473d9160a80"
+    timeout:
+      defaultLambda: 20
+      apiLambda: 20
+      imageLambda: 20
