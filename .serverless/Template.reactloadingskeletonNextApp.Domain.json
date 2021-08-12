@@ -1,0 +1,13 @@
+{
+  "region": "us-east-1",
+  "privateZone": false,
+  "domain": "pedidopago.com.br",
+  "subdomains": [
+    {
+      "domain": "react-loading-skeleton.teste.pedidopago.com.br",
+      "distributionId": "E2YAJNDMVVO4ZT",
+      "url": "https://d1b0zyq36dhoyb.cloudfront.net",
+      "type": "awsCloudFront"
+    }
+  ]
+}

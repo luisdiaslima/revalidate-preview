@@ -2,8 +2,8 @@
   "name": "65ae9vd-t6jmf8h",
   "arn": "arn:aws:iam::653347587803:role/65ae9vd-t6jmf8h",
   "service": [
-    "lambda.amazonaws.com",
-    "edgelambda.amazonaws.com"
+    "edgelambda.amazonaws.com",
+    "lambda.amazonaws.com"
   ],
   "policy": {
     "Version": "2012-10-17",
