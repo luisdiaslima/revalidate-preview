@@ -6,4 +6,5 @@ if [[ -e .env ]];then
   export $(egrep -v '^#' .env | xargs)
 fi
 
-serverless deploy -v
+# serverless deploy -v
+serverless
